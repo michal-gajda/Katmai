@@ -1,9 +1,9 @@
+namespace Katmai.WebApi;
+
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-
-namespace Katmai.WebApi;
 
 public sealed class Program
 {
