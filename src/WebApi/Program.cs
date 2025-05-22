@@ -4,6 +4,8 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Katmai.Application;
+using Katmai.Infrastructure;
 
 public sealed class Program
 {
@@ -37,6 +39,9 @@ public sealed class Program
             .WithMetrics(metrics => metrics
                 .AddAspNetCoreInstrumentation()
                 .AddOtlpExporter());
+
+        builder.Services.AddApplication();
+        builder.Services.AddInfrastructure(builder.Configuration);
 
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
