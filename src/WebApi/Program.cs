@@ -1,20 +1,20 @@
 namespace Katmai.WebApi;
 
+using Katmai.Application;
+using Katmai.Infrastructure;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Katmai.Application;
-using Katmai.Infrastructure;
 
 public sealed class Program
 {
     private const int EXIT_SUCCESS = 0;
+    private const string INSTANCE_ID = "development";
 
     private const string SERVICE_NAME = "katmai";
     private const string SERVICE_NAMESPACE = "otel";
     private const string SERVICE_VERSION = "1.0.0";
-    private const string INSTANCE_ID = "development";
 
     public static async Task<int> Main(string[] args)
     {
@@ -31,12 +31,13 @@ public sealed class Program
         });
 
         builder.Services.AddOpenTelemetry()
-            .ConfigureResource(resource => resource.AddService(SERVICE_NAME))
             .WithTracing(tracing => tracing
+                .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddOtlpExporter())
             .WithMetrics(metrics => metrics
+                .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
                 .AddOtlpExporter());
 
