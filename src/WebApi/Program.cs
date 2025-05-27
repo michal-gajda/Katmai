@@ -9,11 +9,12 @@ public static class Program
     private const string SERVICE_NAMESPACE = "consolia"; // system name from C4, C1 level
 
     private const int EXIT_SUCCESS = 0;
+
     public static async Task<int> Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.UseBootstrapper(SERVICE_NAME, SERVICE_NAMESPACE);
+        builder.AddObservability(SERVICE_NAME, SERVICE_NAMESPACE);
 
         builder.Services.AddApplication();
         builder.Services.AddInfrastructure(builder.Configuration);
@@ -24,7 +25,7 @@ public static class Program
 
         var app = builder.Build();
 
-        app.UseBootstrapper();
+        app.UseObservability();
 
         if (app.Environment.IsDevelopment())
         {

@@ -7,9 +7,9 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-internal static class BootstrapperExtensions
+internal static class ObservabilityExtensions
 {
-    public static void UseBootstrapper(this WebApplicationBuilder builder, string serviceName, string serviceNamespace)
+    public static void AddObservability(this WebApplicationBuilder builder, string serviceName, string serviceNamespace)
     {
         builder.Services.AddHealthChecks();
 
@@ -43,7 +43,7 @@ internal static class BootstrapperExtensions
         builder.Services.AddSingleton(TracerProvider.Default.GetTracer(serviceName, serviceVersion));
     }
 
-    public static void UseBootstrapper(this WebApplication app)
+    public static void UseObservability(this WebApplication app)
     {
         app.UseHealthChecks("/health");
     }
